@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { getCollection } from '@/data/content'
+import { getCollection } from '@/content-data'
 
 export const Route = createFileRoute('/rss/xml')({
   loader: () => {

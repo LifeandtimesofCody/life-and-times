@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { ArrowLeft } from 'lucide-react'
-import { getCollection } from '@/data/content'
+import { getCollection } from '@/content-data'
 import { formatDate, renderMarkdown } from '@/lib/content'
 
 export const Route = createFileRoute('/ideas')({

@@ -1,6 +1,6 @@
 import { createFileRoute, Link, notFound } from '@tanstack/react-router'
 import { ArrowLeft, ArrowUpRight } from 'lucide-react'
-import { getCollection } from '@/data/content'
+import { getCollection } from '@/content-data'
 import { formatDate, renderMarkdown } from '@/lib/content'
 
 export const Route = createFileRoute('/notes/$slug')({

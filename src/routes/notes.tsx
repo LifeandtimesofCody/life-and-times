@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { ArrowLeft, ArrowUpRight } from 'lucide-react'
 import { createElement } from 'react'
-import { getCollection } from '@/data/content'
+import { getCollection } from '@/content-data'
 import { formatDate } from '@/lib/content'
 
 export const Route = createFileRoute('/notes')({

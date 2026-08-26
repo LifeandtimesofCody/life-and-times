@@ -267,6 +267,10 @@ export default defineConfig({
       'framer-motion',
       '@tanstack/react-router',
       '@tanstack/react-query',
+      // TanStack Start loads this hydration entry with a browser-side dynamic import.
+      // Pre-optimizing the exact entry prevents the first request from racing Vite's
+      // dependency scan and returning a failed /node_modules/ module URL.
+      '@tanstack/react-start/dist/plugin/default-entry/client.tsx',
     ],
   },
   server: {

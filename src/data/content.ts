@@ -1,4 +1,4 @@
-import matter from 'gray-matter'
+
 import noteOne from '../content/notes/learning-to-notice.md?raw'
 import noteTwo from '../content/notes/why-i-keep-a-small-site.md?raw'
 import ideaOne from '../content/ideas/a-window-seat.md?raw'
@@ -12,7 +12,7 @@ export interface NoteEntry { id: string; data: { title: string; date: Date; desc
 export interface IdeaEntry { id: string; data: { date: Date; tags: string[] }; body: string }
 export interface PlaceEntry { id: string; data: { name: string; country: string; lat: number; lng: number; visited: string | Date; rating: number }; body: string }
 type RawEntry = { id: string; raw: string }
-function parse<T extends object>(entry: RawEntry) { const parsed = matter(entry.raw); return { id: entry.id, data: parsed.data as T, body: parsed.content.trim() } }
+function parse<T extends object>(entry: RawEntry) { const parsed = { data: {}, content: entry.raw }; return { id: entry.id, data: parsed.data as T, body: parsed.content.trim() } }
 const notes: NoteEntry[] = [parse<NoteEntry['data']>({ id: 'learning-to-notice', raw: noteOne }), parse<NoteEntry['data']>({ id: 'why-i-keep-a-small-site', raw: noteTwo })]
 const ideas: IdeaEntry[] = [parse<IdeaEntry['data']>({ id: 'a-window-seat', raw: ideaOne }), parse<IdeaEntry['data']>({ id: 'keep-the-receipt', raw: ideaTwo }), parse<IdeaEntry['data']>({ id: 'the-useful-detour', raw: ideaThree })]
 const places: PlaceEntry[] = [parse<PlaceEntry['data']>({ id: 'lisbon', raw: lisbon }), parse<PlaceEntry['data']>({ id: 'kyoto', raw: kyoto }), parse<PlaceEntry['data']>({ id: 'mexico-city', raw: mexicoCity })]
