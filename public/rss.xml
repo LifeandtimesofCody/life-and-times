@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Life and Times</title>
+    <link>https://lifeandtimes.xyz</link>
+    <description>Notes and ideas from a life in progress.</description>
+    <item><title>Learning to notice</title><link>https://lifeandtimes.xyz/notes/learning-to-notice</link><guid>https://lifeandtimes.xyz/notes/learning-to-notice</guid><pubDate>Tue, 18 Aug 2026 00:00:00 GMT</pubDate><description>On paying closer attention to the small, repeatable details that make a day feel like yours.</description></item>
+    <item><title>Keep the receipt</title><link>https://lifeandtimes.xyz/ideas</link><guid>https://lifeandtimes.xyz/ideas#keep-the-receipt</guid><pubDate>Tue, 11 Aug 2026 00:00:00 GMT</pubDate><description>A short thought from Life and Times.</description></item>
+    <item><title>Why I keep a small site</title><link>https://lifeandtimes.xyz/notes/why-i-keep-a-small-site</link><guid>https://lifeandtimes.xyz/notes/why-i-keep-a-small-site</guid><pubDate>Sat, 04 Jul 2026 00:00:00 GMT</pubDate><description>A quiet argument for making a place on the internet that feels more like a notebook than a profile.</description></item>
+    <item><title>The useful detour</title><link>https://lifeandtimes.xyz/ideas</link><guid>https://lifeandtimes.xyz/ideas#the-useful-detour</guid><pubDate>Sun, 19 Jul 2026 00:00:00 GMT</pubDate><description>A short thought from Life and Times.</description></item>
+  </channel>
+</rss>

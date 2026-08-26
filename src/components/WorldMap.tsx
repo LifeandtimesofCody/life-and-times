@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps'
 import { X } from 'lucide-react'
+import worldData from '@/data/world.json'
 
 export interface PlaceMapItem {
   id: string
@@ -13,7 +14,7 @@ export interface PlaceMapItem {
   html: string
 }
 
-const geographyUrl = '/world.json'
+const geographyData = worldData
 
 export function WorldMap({ places }: { places: PlaceMapItem[] }) {
   const [selectedId, setSelectedId] = useState<string | null>(places[0]?.id ?? null)
@@ -23,7 +24,7 @@ export function WorldMap({ places }: { places: PlaceMapItem[] }) {
     <div className="relative grid min-h-[480px] overflow-hidden border-y border-border bg-[var(--map-water)] lg:grid-cols-[minmax(0,1fr)_320px]">
       <div className="relative min-h-[480px] p-3 sm:p-8">
         <ComposableMap projection="geoEqualEarth" projectionConfig={{ scale: 145 }} className="h-full w-full">
-          <Geographies geography={geographyUrl}>
+          <Geographies geography={geographyData}>
             {({ geographies }) => geographies.map((geo) => (
               <Geography
                 key={geo.rsmKey}
