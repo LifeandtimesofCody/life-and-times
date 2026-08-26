@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  Starter sitemap — served as a real static file (not the SPA shell).
-  The seo-aeo skill expands this to list every indexable route and rewrites
-  <loc> to absolute URLs on the deployed domain, e.g. https://your-domain/.
--->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/</loc>
-  </url>
+  <url><loc>https://lifeandtimes.xyz/</loc></url>
+  <url><loc>https://lifeandtimes.xyz/notes</loc></url>
+  <url><loc>https://lifeandtimes.xyz/notes/learning-to-notice</loc></url>
+  <url><loc>https://lifeandtimes.xyz/notes/why-i-keep-a-small-site</loc></url>
+  <url><loc>https://lifeandtimes.xyz/ideas</loc></url>
+  <url><loc>https://lifeandtimes.xyz/places</loc></url>
 </urlset>

@@ -51,14 +51,13 @@ export const Route = createRootRoute({
     meta: [
       { charSet: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
-      { title: 'Blink App' },
-      { name: 'description', content: 'An app built with Blink.' },
-      { name: 'theme-color', content: '#0a0a0a' },
+      { title: 'Life and Times — notes from a life in progress' },
+      { name: 'description', content: 'A small personal archive of notes, ideas, and places.' },
+      { name: 'theme-color', content: '#f0eee8' },
       { property: 'og:type', content: 'website' },
-      { property: 'og:title', content: 'Blink App' },
-      { property: 'og:description', content: 'An app built with Blink.' },
-      // Shared-shell SEO defaults — set these to the real brand/locale per app.
-      { property: 'og:site_name', content: 'Blink App' },
+      { property: 'og:title', content: 'Life and Times' },
+      { property: 'og:description', content: 'Notes, ideas, and places from a life in progress.' },
+      { property: 'og:site_name', content: 'Life and Times' },
       { property: 'og:locale', content: 'en_US' },
       { name: 'twitter:card', content: 'summary_large_image' },
     ],
@@ -90,8 +89,8 @@ function RootDocument({ children }: { children: ReactNode }) {
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@graph': [
-                { '@type': 'WebSite', name: 'Blink App', url: '/' },
-                { '@type': 'Organization', name: 'Blink App', url: '/', sameAs: [] },
+                { '@type': 'WebSite', name: 'Life and Times', url: 'https://lifeandtimes.xyz' },
+                { '@type': 'Organization', name: 'Life and Times', url: 'https://lifeandtimes.xyz', sameAs: [] },
               ],
             }),
           }}

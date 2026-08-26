@@ -1,0 +1,20 @@
+import { createFileRoute, Link } from '@tanstack/react-router'
+import { ArrowLeft, MapPin } from 'lucide-react'
+import { getCollection } from '@/data/content'
+import { formatDate, renderMarkdown } from '@/lib/content'
+import { WorldMap, type PlaceMapItem } from '@/components/WorldMap'
+import { BlinkClientBoundary } from '@/components/BlinkClientBoundary'
+
+export const Route = createFileRoute('/places')({
+  head: () => ({ meta: [{ title: 'Places — Life and Times' }, { name: 'description', content: 'A map and field notes from places I have visited.' }, { property: 'og:title', content: 'Places — Life and Times' }, { property: 'og:description', content: 'A map and field notes from places I have visited.' }] }),
+  component: Places,
+})
+
+function Places() {
+  const entries = getCollection('places').sort((a, b) => a.data.country.localeCompare(b.data.country))
+  const mapPlaces: PlaceMapItem[] = entries.map((entry) => ({ id: entry.id, ...entry.data, visited: typeof entry.data.visited === 'string' ? entry.data.visited : formatDate(entry.data.visited), html: renderMarkdown(entry.body) }))
+  const grouped = entries.reduce<Record<string, typeof entries>>((groups, entry) => { (groups[entry.data.country] ??= []).push(entry); return groups }, {})
+  return (
+    <main className="mx-auto max-w-6xl px-6 pb-24 sm:px-10"><header className="flex items-center justify-between border-b border-border py-5"><Link to="/" className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground hover:text-primary"><ArrowLeft className="size-3" /> Life and Times</Link><Link to="/notes" className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground hover:text-primary">Notes</Link></header><section className="grid gap-10 py-24 sm:grid-cols-[1fr_0.7fr] sm:items-end sm:py-32"><div><p className="mb-5 font-mono text-[10px] uppercase tracking-[0.2em] text-primary">Field notes / 03</p><h1 className="font-serif text-6xl tracking-[-0.05em] sm:text-8xl">Places</h1></div><p className="max-w-sm text-lg leading-8 text-muted-foreground">A record of cities, meals, missed turns, and the small advice I would give myself next time.</p></section><BlinkClientBoundary fallback={<div className="flex min-h-[480px] items-center justify-center border-y border-border bg-[var(--map-water)] p-8 text-center text-sm text-muted-foreground">The map is loading. The complete place list is below.</div>}><WorldMap places={mapPlaces} /></BlinkClientBoundary><section className="mt-24" aria-labelledby="all-places"><div className="mb-8 flex items-end justify-between border-b border-border pb-5"><h2 id="all-places" className="font-serif text-3xl">Everywhere, in words</h2><span className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">{entries.length} entries</span></div><div className="grid gap-x-12 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">{Object.entries(grouped).map(([country, countryEntries]) => <div key={country}><h3 className="mb-4 font-mono text-[10px] uppercase tracking-[0.18em] text-primary">{country}</h3><div className="divide-y divide-border">{countryEntries.map((entry) => <details key={entry.id} className="group py-3"><summary className="flex cursor-pointer list-none items-center justify-between gap-3 font-serif text-xl marker:hidden"><span>{entry.data.name}</span><MapPin className="size-3 text-muted-foreground transition-transform group-open:rotate-45" /></summary><div className="prose-place mt-4 text-sm leading-7 text-muted-foreground" dangerouslySetInnerHTML={{ __html: renderMarkdown(entry.body) }} /><p className="mt-3 font-mono text-[10px] uppercase tracking-[0.1em] text-muted-foreground">{typeof entry.data.visited === 'string' ? entry.data.visited : formatDate(entry.data.visited)} · {entry.data.rating.toFixed(1)} / 5</p></details>)}</div></div>)}</div></section><footer className="mt-24 border-t border-border pt-5 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">Maps are for remembering, not measuring.</footer></main>
+  )
+}

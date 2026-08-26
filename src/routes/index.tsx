@@ -1,56 +1,76 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
+import { ArrowUpRight, Moon, Sun } from 'lucide-react'
+import { BlinkClientBoundary } from '@/components/BlinkClientBoundary'
 
-/**
- * Home route (/). A neutral, FULL-BLEED starting point — no app chrome, no
- * sidebar. Replace this body with your real landing page or app home.
- *
- * Add more pages as files under `src/routes/` (e.g. `src/routes/about.tsx`
- * → /about). The HTML document + providers live once in `__root.tsx`.
- *
- * Building a SaaS / dashboard app? The sidebar shell already exists at
- * `src/routes/app.tsx` with its home at `src/routes/app/index.tsx` (→ /app) — add
- * your pages as files in `src/routes/app/`. Do NOT create a `src/routes/_app.tsx`:
- * a `_`-prefixed layout is PATHLESS, so `_app/index.tsx` resolves to `/` and
- * collides with THIS file (build fails: "Conflicting configuration paths").
- * Dashboard-only product? Keep this file and redirect it to `/app`.
- * Landing pages, marketing sites, content, and games stay full-bleed (default) —
- * delete `src/routes/app.tsx` + `src/routes/app/` if you don't need a dashboard.
- *
- * SEO: set per-page title/description/Open Graph here in `head()`.
- *
- * SSR / routing (this template is server-rendered — TanStack Start):
- * - Routes are files under `src/routes/` that `export const Route =
- *   createFileRoute('/path')({ component })`. NEVER `export default` a route.
- *   Navigate with `Link` from `@tanstack/react-router` (there is no `NavLink`).
- * - Reading Blink auth/SDK state (`blink.auth`), `localStorage`, or `window` at
- *   render CRASHES SSR / hydration-mismatches and ships a blank first page. Wrap
- *   that subtree in `<BlinkClientBoundary fallback={…}>` (from
- *   `@/components/BlinkClientBoundary`) — wrap the whole tree if the entire page
- *   needs the browser. Keep static content outside the boundary. Do NOT use the
- *   route's `ssr: false`: a client-only route in this template hits Start's
- *   server-context `node:async_hooks` path (a throwing browser stub) and ships a
- *   BLANK preview ("AsyncLocalStorage is not a constructor").
- */
+const recentItems = [
+  { type: 'note', date: 'Aug 18, 2026', title: 'Learning to notice', href: '/notes/learning-to-notice' },
+  { type: 'idea', date: 'Aug 11, 2026', title: 'Keep the receipt', href: '/ideas' },
+  { type: 'note', date: 'Jul 04, 2026', title: 'Why I keep a small site', href: '/notes/why-i-keep-a-small-site' },
+  { type: 'idea', date: 'Jul 19, 2026', title: 'The useful detour', href: '/ideas' },
+]
+
 export const Route = createFileRoute('/')({
   head: () => ({
     meta: [
-      { title: 'Home · Blink App' },
-      { name: 'description', content: 'Welcome — an app built with Blink.' },
+      { title: 'Life and Times — notes from a life in progress' },
+      { name: 'description', content: 'Life and Times is a small personal archive of notes, ideas, and places.' },
+      { property: 'og:title', content: 'Life and Times' },
+      { property: 'og:description', content: 'Notes, ideas, and places from a life in progress.' },
+      { property: 'og:type', content: 'website' },
     ],
   }),
   component: Home,
 })
 
+function ThemeToggle() {
+  return (
+    <BlinkClientBoundary fallback={<span className="size-9" />}>
+      <button type="button" aria-label="Toggle dark mode" onClick={() => document.documentElement.classList.toggle('dark')} className="group flex size-9 items-center justify-center rounded-sm border border-border text-muted-foreground transition-colors hover:border-primary hover:text-primary">
+        <Sun className="size-4 dark:hidden" /><Moon className="hidden size-4 dark:block" />
+      </button>
+    </BlinkClientBoundary>
+  )
+}
+
+function SiteHeader() {
+  return (
+    <header className="flex items-center justify-between border-b border-border py-5">
+      <Link to="/" className="font-serif text-lg tracking-tight transition-colors hover:text-primary">Life and Times</Link>
+      <nav className="flex items-center gap-5 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground sm:gap-7">
+        <Link to="/notes" className="transition-colors hover:text-primary">Notes</Link>
+        <Link to="/ideas" className="transition-colors hover:text-primary">Ideas</Link>
+        <Link to="/places" className="transition-colors hover:text-primary">Places</Link>
+        <ThemeToggle />
+      </nav>
+    </header>
+  )
+}
+
 function Home() {
   return (
-    <main className="flex min-h-dvh flex-col items-center justify-center gap-3 px-6 text-center">
-      <h1 className="text-2xl font-semibold tracking-tight">Your Blink app is ready</h1>
-      <p className="max-w-md text-sm text-muted-foreground">
-        This is the full-bleed starter home with no sidebar. Edit{' '}
-        <code className="rounded bg-muted px-1">src/routes/index.tsx</code> to build your
-        page, or add routes under{' '}
-        <code className="rounded bg-muted px-1">src/routes/</code>.
-      </p>
+    <main className="mx-auto max-w-5xl px-6 pb-20 sm:px-10">
+      <SiteHeader />
+      <section className="grid gap-12 py-24 sm:grid-cols-[1fr_1.2fr] sm:items-end sm:py-36">
+        <div>
+          <p className="mb-6 font-mono text-[10px] uppercase tracking-[0.2em] text-primary">A personal archive · 2026</p>
+          <h1 className="max-w-xl font-serif text-5xl leading-[0.98] tracking-[-0.045em] sm:text-7xl">A life, in fragments.</h1>
+        </div>
+        <div className="max-w-md border-l border-primary pl-6 text-lg leading-8 text-muted-foreground sm:mb-1 sm:ml-auto">
+          <p>Notes on paying attention, ideas before they are finished, and a record of the places that changed the shape of a day.</p>
+          <p className="mt-5 text-sm text-foreground">I am keeping this small on purpose.</p>
+        </div>
+      </section>
+      <section className="border-t border-border pt-6" aria-labelledby="recent-heading">
+        <div className="mb-8 flex items-center justify-between"><h2 id="recent-heading" className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Recently, in the archive</h2><span className="font-mono text-[10px] text-muted-foreground">04 / 04</span></div>
+        <div className="divide-y divide-border">
+          {recentItems.map((item, index) => (
+            <Link key={`${item.type}-${item.title}`} to={item.href} className="group grid gap-2 py-5 transition-colors hover:text-primary sm:grid-cols-[90px_72px_1fr_20px] sm:items-center">
+              <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-muted-foreground">{item.date}</span><span className="font-mono text-[10px] uppercase tracking-[0.16em] text-primary">{item.type}</span><span className="font-serif text-2xl tracking-tight">{item.title}</span><ArrowUpRight className="size-4 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary" />
+            </Link>
+          ))}
+        </div>
+      </section>
+      <footer className="mt-24 flex flex-col justify-between gap-3 border-t border-border pt-5 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground sm:flex-row"><span>lifeandtimes.xyz</span><span>Made slowly · <a href="/rss.xml" className="hover:text-primary">RSS</a></span></footer>
     </main>
   )
 }

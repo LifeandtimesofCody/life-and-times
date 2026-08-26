@@ -9,10 +9,30 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as PlacesRouteImport } from './routes/places'
+import { Route as NotesRouteImport } from './routes/notes'
+import { Route as IdeasRouteImport } from './routes/ideas'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppIndexRouteImport } from './routes/app/index'
+import { Route as RssXmlRouteImport } from './routes/rss.xml'
+import { Route as NotesSlugRouteImport } from './routes/notes.$slug'
 
+const PlacesRoute = PlacesRouteImport.update({
+  id: '/places',
+  path: '/places',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NotesRoute = NotesRouteImport.update({
+  id: '/notes',
+  path: '/notes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IdeasRoute = IdeasRouteImport.update({
+  id: '/ideas',
+  path: '/ideas',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppRoute = AppRouteImport.update({
   id: '/app',
   path: '/app',
@@ -28,37 +48,105 @@ const AppIndexRoute = AppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppRoute,
 } as any)
+const RssXmlRoute = RssXmlRouteImport.update({
+  id: '/rss/xml',
+  path: '/rss/xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NotesSlugRoute = NotesSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => NotesRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
+  '/ideas': typeof IdeasRoute
+  '/notes': typeof NotesRouteWithChildren
+  '/places': typeof PlacesRoute
+  '/notes/$slug': typeof NotesSlugRoute
+  '/rss/xml': typeof RssXmlRoute
   '/app/': typeof AppIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ideas': typeof IdeasRoute
+  '/notes': typeof NotesRouteWithChildren
+  '/places': typeof PlacesRoute
+  '/notes/$slug': typeof NotesSlugRoute
+  '/rss/xml': typeof RssXmlRoute
   '/app': typeof AppIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
+  '/ideas': typeof IdeasRoute
+  '/notes': typeof NotesRouteWithChildren
+  '/places': typeof PlacesRoute
+  '/notes/$slug': typeof NotesSlugRoute
+  '/rss/xml': typeof RssXmlRoute
   '/app/': typeof AppIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/app' | '/app/'
+  fullPaths:
+    | '/'
+    | '/app'
+    | '/ideas'
+    | '/notes'
+    | '/places'
+    | '/notes/$slug'
+    | '/rss/xml'
+    | '/app/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/app'
-  id: '__root__' | '/' | '/app' | '/app/'
+  to:
+    '/' | '/ideas' | '/notes' | '/places' | '/notes/$slug' | '/rss/xml' | '/app'
+  id:
+    | '__root__'
+    | '/'
+    | '/app'
+    | '/ideas'
+    | '/notes'
+    | '/places'
+    | '/notes/$slug'
+    | '/rss/xml'
+    | '/app/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
+  IdeasRoute: typeof IdeasRoute
+  NotesRoute: typeof NotesRouteWithChildren
+  PlacesRoute: typeof PlacesRoute
+  RssXmlRoute: typeof RssXmlRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/places': {
+      id: '/places'
+      path: '/places'
+      fullPath: '/places'
+      preLoaderRoute: typeof PlacesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notes': {
+      id: '/notes'
+      path: '/notes'
+      fullPath: '/notes'
+      preLoaderRoute: typeof NotesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ideas': {
+      id: '/ideas'
+      path: '/ideas'
+      fullPath: '/ideas'
+      preLoaderRoute: typeof IdeasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/app': {
       id: '/app'
       path: '/app'
@@ -80,6 +168,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/rss/xml': {
+      id: '/rss/xml'
+      path: '/rss/xml'
+      fullPath: '/rss/xml'
+      preLoaderRoute: typeof RssXmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notes/$slug': {
+      id: '/notes/$slug'
+      path: '/$slug'
+      fullPath: '/notes/$slug'
+      preLoaderRoute: typeof NotesSlugRouteImport
+      parentRoute: typeof NotesRoute
+    }
   }
 }
 
@@ -93,9 +195,23 @@ const AppRouteChildren: AppRouteChildren = {
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
+interface NotesRouteChildren {
+  NotesSlugRoute: typeof NotesSlugRoute
+}
+
+const NotesRouteChildren: NotesRouteChildren = {
+  NotesSlugRoute: NotesSlugRoute,
+}
+
+const NotesRouteWithChildren = NotesRoute._addFileChildren(NotesRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
+  IdeasRoute: IdeasRoute,
+  NotesRoute: NotesRouteWithChildren,
+  PlacesRoute: PlacesRoute,
+  RssXmlRoute: RssXmlRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -173,4 +173,12 @@
     from { opacity: 0; transform: translateY(10px); }
     to   { opacity: 1; transform: translateY(0); }
   }
+  .prose-note p, .prose-place p, .prose-idea p { margin: 0 0 1.25rem; }
+  .prose-note p:last-child, .prose-place p:last-child, .prose-idea p:last-child { margin-bottom: 0; }
+  .prose-note strong, .prose-place strong { color: var(--foreground); font-weight: 500; }
+  .prose-note a, .prose-place a, .prose-idea a { color: var(--primary); text-decoration: underline; text-underline-offset: 3px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }
