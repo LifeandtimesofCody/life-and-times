@@ -6,13 +6,17 @@ import ideaThree from './content/ideas/the-useful-detour.md?raw'
 import lisbon from './content/places/lisbon.md?raw'
 import kyoto from './content/places/kyoto.md?raw'
 import mexicoCity from './content/places/mexico-city.md?raw'
+import projectOne from './content/projects/project-one.md?raw'
+import projectTwo from './content/projects/project-two.md?raw'
+import projectThree from './content/projects/project-three.md?raw'
 import { contentSchemas } from './content.config'
 
 export interface NoteEntry { id: string; data: { title: string; date: Date; description: string; tags: string[]; draft: boolean }; body: string }
 export interface IdeaEntry { id: string; data: { date: Date; tags: string[] }; body: string }
 export interface PlaceEntry { id: string; data: { name: string; country: string; lat: number; lng: number; visited: string | Date; rating: number }; body: string }
+export interface ProjectEntry { id: string; data: { title: string; tagline: string; status: 'active' | 'shipped' | 'paused'; date: Date; tags: string[]; url?: string }; body: string }
 type RawEntry = { id: string; raw: string }
-type CollectionName = 'notes' | 'ideas' | 'places'
+type CollectionName = 'notes' | 'ideas' | 'places' | 'projects'
 type Frontmatter = Record<string, string | number | boolean | string[] | Date>
 
 function parseFrontmatter(raw: string): { data: Frontmatter; body: string } {
@@ -42,8 +46,10 @@ function parse<T extends object>(entry: RawEntry, collection: CollectionName, da
 const notes: NoteEntry[] = [parse<NoteEntry['data']>({ id: 'learning-to-notice', raw: noteOne }, 'notes', ['date']), parse<NoteEntry['data']>({ id: 'why-i-keep-a-small-site', raw: noteTwo }, 'notes', ['date'])]
 const ideas: IdeaEntry[] = [parse<IdeaEntry['data']>({ id: 'a-window-seat', raw: ideaOne }, 'ideas', ['date']), parse<IdeaEntry['data']>({ id: 'keep-the-receipt', raw: ideaTwo }, 'ideas', ['date']), parse<IdeaEntry['data']>({ id: 'the-useful-detour', raw: ideaThree }, 'ideas', ['date'])]
 const places: PlaceEntry[] = [parse<PlaceEntry['data']>({ id: 'lisbon', raw: lisbon }, 'places'), parse<PlaceEntry['data']>({ id: 'kyoto', raw: kyoto }, 'places'), parse<PlaceEntry['data']>({ id: 'mexico-city', raw: mexicoCity }, 'places')]
+const projects: ProjectEntry[] = [parse<ProjectEntry['data']>({ id: 'project-one', raw: projectOne }, 'projects', ['date']), parse<ProjectEntry['data']>({ id: 'project-two', raw: projectTwo }, 'projects', ['date']), parse<ProjectEntry['data']>({ id: 'project-three', raw: projectThree }, 'projects', ['date'])]
 
 export function getCollection(name: 'notes'): NoteEntry[]
 export function getCollection(name: 'ideas'): IdeaEntry[]
 export function getCollection(name: 'places'): PlaceEntry[]
-export function getCollection(name: 'notes' | 'ideas' | 'places') { return name === 'notes' ? notes : name === 'ideas' ? ideas : places }
+export function getCollection(name: 'projects'): ProjectEntry[]
+export function getCollection(name: 'notes' | 'ideas' | 'places' | 'projects') { return name === 'notes' ? notes : name === 'ideas' ? ideas : name === 'places' ? places : projects }
