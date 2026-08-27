@@ -54,12 +54,11 @@ function Home() {
           <SiteHeader />
           <section className="grid gap-12 py-24 sm:grid-cols-[1.15fr_.85fr] sm:items-end sm:py-36">
             <div className="editorial-reveal">
-              <p className="mb-7 font-mono text-[10px] uppercase tracking-[0.2em] text-orange">A personal archive · 2026</p>
+              <p className="mb-7 font-mono text-[10px] uppercase tracking-[0.2em] text-orange">Storing thoughts, ideas, and anything else</p>
               <h1 id="site-intro" className="max-w-3xl font-serif text-6xl leading-[0.94] tracking-[-0.05em] sm:text-8xl">LifeandTimes <span className="editorial-underline">ofCody.</span></h1>
             </div>
             <div className="max-w-sm border-l border-orange pl-6 text-lg leading-8 text-ivory/80 sm:mb-1 sm:ml-auto">
               <p>Notes on paying attention, ideas before they are finished, and a record of the places that changed the shape of a day.</p>
-              <p className="mt-5 text-sm text-ivory">I am keeping this small on purpose.</p>
             </div>
           </section>
         </div>
