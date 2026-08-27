@@ -32,20 +32,20 @@ export function WorldMap({ places }: { places: PlaceMapItem[] }) {
                 fill="var(--map-land)"
                 stroke="var(--map-stroke)"
                 strokeWidth={0.35}
-                style={{ default: { outline: 'none' }, hover: { outline: 'none', fill: 'var(--accent)' }, pressed: { outline: 'none' } }}
+                style={{ default: { outline: 'none' }, hover: { outline: 'none', fill: 'var(--orange)' }, pressed: { outline: 'none' } }}
               />
             ))}
           </Geographies>
           {places.map((place) => (
             <Marker key={place.id} coordinates={[place.lng, place.lat]} onClick={() => setSelectedId(place.id)}>
-              <circle r={selectedId === place.id ? 8 : 5} fill="var(--primary)" stroke="var(--background)" strokeWidth={2} className="cursor-pointer transition-all duration-200" />
-              <circle r={selectedId === place.id ? 14 : 9} fill="none" stroke="var(--primary)" strokeOpacity={selectedId === place.id ? 0.45 : 0} strokeWidth={1.5} className="pointer-events-none" />
+              <circle r={selectedId === place.id ? 8 : 5} fill="var(--orange)" stroke="var(--navy)" strokeWidth={2} className="cursor-pointer transition-all duration-200" />
+              <circle r={selectedId === place.id ? 14 : 9} fill="none" stroke="var(--orange)" strokeOpacity={selectedId === place.id ? 0.45 : 0} strokeWidth={1.5} className="pointer-events-none" />
             </Marker>
           ))}
         </ComposableMap>
         <p className="absolute bottom-5 left-6 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground sm:left-10">A record in coordinates · {places.length} places</p>
       </div>
-      <aside className="border-t border-border bg-background p-6 sm:p-8 lg:border-l lg:border-t-0">
+      <aside className="border-t border-border bg-ivory p-6 text-ink sm:p-8 lg:border-l lg:border-t-0">
         {selected ? (
           <div className="animate-fade-in">
             <div className="mb-10 flex items-start justify-between gap-4">

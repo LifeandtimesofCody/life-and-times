@@ -25,7 +25,7 @@ export const Route = createFileRoute('/')({
 function ThemeToggle() {
   return (
     <BlinkClientBoundary fallback={<span className="size-9" />}>
-      <button type="button" aria-label="Toggle dark mode" onClick={() => { const dark = !document.documentElement.classList.contains('dark'); document.documentElement.classList.toggle('dark', dark); localStorage.setItem('theme', dark ? 'dark' : 'light') }} className="group flex size-9 items-center justify-center rounded-sm border border-border text-muted-foreground transition-colors hover:border-primary hover:text-primary">
+      <button type="button" aria-label="Toggle dark mode" onClick={() => { const dark = !document.documentElement.classList.contains('dark'); document.documentElement.classList.toggle('dark', dark); try { localStorage.setItem('theme', dark ? 'dark' : 'light') } catch { /* storage can be unavailable in private browsing */ } }} className="group flex size-9 items-center justify-center rounded-sm border border-border text-muted-foreground transition-colors hover:border-primary hover:text-primary">
         <Sun className="size-4 dark:hidden" /><Moon className="hidden size-4 dark:block" />
       </button>
     </BlinkClientBoundary>
@@ -49,13 +49,13 @@ function SiteHeader() {
 function Home() {
   return (
     <main className="bg-background">
-      <section className="bg-navy text-ivory">
+      <section className="bg-navy text-ivory" aria-labelledby="site-intro">
         <div className="mx-auto max-w-6xl px-6 sm:px-10">
           <SiteHeader />
           <section className="grid gap-12 py-24 sm:grid-cols-[1.15fr_.85fr] sm:items-end sm:py-36">
             <div className="editorial-reveal">
               <p className="mb-7 font-mono text-[10px] uppercase tracking-[0.2em] text-orange">A personal archive · 2026</p>
-              <h1 className="max-w-3xl font-serif text-6xl leading-[0.94] tracking-[-0.05em] sm:text-8xl">A life, in <span className="editorial-underline">fragments.</span></h1>
+              <h1 id="site-intro" className="max-w-3xl font-serif text-6xl leading-[0.94] tracking-[-0.05em] sm:text-8xl">A life, in <span className="editorial-underline">fragments.</span></h1>
             </div>
             <div className="max-w-sm border-l border-orange pl-6 text-lg leading-8 text-ivory/80 sm:mb-1 sm:ml-auto">
               <p>Notes on paying attention, ideas before they are finished, and a record of the places that changed the shape of a day.</p>
@@ -65,11 +65,11 @@ function Home() {
         </div>
       </section>
       <section className="mx-auto max-w-6xl px-6 py-20 sm:px-10 sm:py-28" aria-labelledby="recent-heading">
-        <div className="mb-8 flex items-center justify-between"><h2 id="recent-heading" className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Recently, in the archive</h2><span className="font-mono text-[10px] text-muted-foreground">04 / 04</span></div>
+        <div className="mb-8 flex items-center justify-between"><h2 id="recent-heading" className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Recently, in the archive</h2><span className="font-mono text-[10px] text-warm-gray">04 / 04</span></div>
         <div className="divide-y divide-border">
           {recentItems.map((item) => (
             <Link key={`${item.type}-${item.title}`} to={item.href} className="editorial-link group grid gap-2 py-6 sm:grid-cols-[110px_76px_1fr_20px] sm:items-center">
-              <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-muted-foreground">{item.date}</span><span className="font-mono text-[10px] uppercase tracking-[0.16em] text-primary">{item.type}</span><span className="font-serif text-2xl tracking-tight sm:text-3xl">{item.title}</span><ArrowUpRight className="size-4 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary" />
+              <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-muted-foreground">{item.date}</span><span className="font-mono text-[10px] uppercase tracking-[0.16em] text-orange">{item.type}</span><span className="font-serif text-2xl tracking-tight sm:text-3xl">{item.title}</span><ArrowUpRight className="size-4 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary" />
             </Link>
           ))}
         </div>
